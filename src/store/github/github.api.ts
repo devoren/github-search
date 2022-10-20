@@ -1,12 +1,12 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IRepo, IUser, ServerResponse } from "../../models/models";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { IRepo, IUser, ServerResponse } from '../../models/models';
 
 export const githubApi = createApi({
-	reducerPath: "github/api",
+	reducerPath: 'github/api',
 	baseQuery: fetchBaseQuery({
-		baseUrl: "https://api.github.com/",
+		baseUrl: 'https://api.github.com/',
 	}),
-	refetchOnFocus: true,
+	refetchOnFocus: false,
 	refetchOnReconnect: true,
 	endpoints: (build) => ({
 		searchUsers: build.query<IUser[], string>({

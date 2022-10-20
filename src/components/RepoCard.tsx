@@ -1,24 +1,29 @@
-import React, { useState } from "react";
-import { IRepo } from "../models/models";
-import { useAppDispatch, useAppSelector } from "../store";
-import { addFavourite, removeFavourite } from "../store/github/github.slice";
+import React, { memo, useState } from 'react';
+import { IRepo } from '../models/models';
+import { useAppDispatch, useAppSelector } from '../store';
+import { addFavourite, removeFavourite } from '../store/github/github.slice';
+interface RepoCardProps {
+	repo: IRepo;
+}
 
-export const RepoCard = ({ repo }: { repo: IRepo }) => {
+const RepoCard: React.FC<RepoCardProps> = ({ repo }) => {
 	const dispatch = useAppDispatch();
-	const favourites = useAppSelector((state) => state.github.favourites);
+	const favourite = useAppSelector((state) =>
+		state.github.favourites.find((fav) => fav === repo.html_url)
+	);
 
-	const [isFav, setIsFav] = useState(favourites.includes(repo.html_url));
+	const [isFav, setIsFav] = useState(!!favourite);
 
 	const AddToFavourite = (event: React.MouseEvent<HTMLButtonElement>) => {
 		dispatch(addFavourite(repo.html_url));
-		setIsFav(true);
+		setIsFav((isFav) => !isFav);
 	};
 
 	const removeFromFavourite = (
 		event: React.MouseEvent<HTMLButtonElement>
 	) => {
 		dispatch(removeFavourite(repo.html_url));
-		setIsFav(false);
+		setIsFav((isFav) => !isFav);
 	};
 
 	return (
@@ -50,3 +55,5 @@ export const RepoCard = ({ repo }: { repo: IRepo }) => {
 		</div>
 	);
 };
+
+export default memo(RepoCard);

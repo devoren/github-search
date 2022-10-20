@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import { RepoCard } from "../components/RepoCard";
-import { useDebounce } from "../hooks/debounce";
+import React, { useEffect, useRef, useState } from 'react';
+import RepoCard from '../components/RepoCard';
+import { useDebounce } from '../hooks/debounce';
 import {
 	useLazyGetUserReposQuery,
 	useSearchUsersQuery,
-} from "../store/github/github.api";
+} from '../store/github/github.api';
 
 function Home() {
-	const [search, setSearch] = useState("devoren");
+	const [search, setSearch] = useState('devoren');
 	const [dropDown, setDropDown] = useState(false);
 	const debounced = useDebounce(search);
 	const { isLoading, isError, data } = useSearchUsersQuery(debounced, {
@@ -29,10 +29,10 @@ function Home() {
 			}
 		}
 		// Bind the event listener
-		document.addEventListener("mousedown", handleClickOutside);
+		document.addEventListener('mousedown', handleClickOutside);
 		return () => {
 			// Unbind the event listener on clean up
-			document.removeEventListener("mousedown", handleClickOutside);
+			document.removeEventListener('mousedown', handleClickOutside);
 		};
 	}, [wrapperRef]);
 
